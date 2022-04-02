@@ -129,7 +129,7 @@ const getSimilarPosts = async (categories, slug) => {
 
 const getCategories = async () => {
   const query = gql`
-    query getCategories {
+    query GetCategories {
       categories {
         name
         slug
