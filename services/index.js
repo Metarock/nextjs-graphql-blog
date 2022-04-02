@@ -1,5 +1,4 @@
 import { request, gql } from 'graphql-request'
-import { request } from 'https'
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHICS_ENDPOINT
 
@@ -101,7 +100,7 @@ const getRecentPosts = async () => {
   return result.posts
 }
 
-const getSimilarPosts = async () => {
+const getSimilarPosts = async (categories, slug) => {
   const query = gql`
     query GetPostDetails($categories: [String!], $slug: String!) {
       posts(
@@ -123,7 +122,7 @@ const getSimilarPosts = async () => {
     }
   `
 
-  const result = await request(graphqlAPI, query)
+  const result = await request(graphqlAPI, query, { categories, slug })
 
   return result.posts
 }
@@ -143,4 +142,10 @@ const getCategories = async () => {
   return result.categories
 }
 
-export { getPosts, getRecentPosts, getSimilarPosts, getCategories }
+export {
+  getPosts,
+  getRecentPosts,
+  getSimilarPosts,
+  getCategories,
+  getPostDetails,
+}
