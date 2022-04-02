@@ -1,4 +1,5 @@
 import { request, gql } from 'graphql-request'
+import { request } from 'https'
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHICS_ENDPOINT
 
@@ -38,6 +39,42 @@ const getPosts = async () => {
   const result = await request(graphqlAPI, query)
 
   return result.postsConnection.edges
+}
+
+const getPostDetails = async (slug) => {
+  const query = gql`
+    query GetPostDetails($slug: String!) {
+      post(where: { slug: $slug }) {
+        author {
+          bio
+          name
+          id
+          photo {
+            url
+          }
+        }
+        createdAt
+        slug
+        title
+        excerpt
+        featuredImage {
+          url
+        }
+        categories {
+          name
+          slug
+        }
+        content {
+          raw
+        }
+      }
+    }
+  `
+
+  // first params: URL, second params: QUERY / requested graphql query, third params: is the variable
+  const result = await request(graphqlAPI, query, { slug })
+
+  return result.post
 }
 
 const getRecentPosts = async () => {
