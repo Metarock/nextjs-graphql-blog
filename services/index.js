@@ -1,6 +1,6 @@
 import { request, gql } from 'graphql-request'
 
-const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHICS_ENDPOINT
+const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQLCMS_ENDPOINT
 
 const getPosts = async () => {
   const query = gql`
@@ -142,10 +142,24 @@ const getCategories = async () => {
   return result.categories
 }
 
+// POST to
+const submitComment = async (obj) => {
+  // use nextjs own backend from the folder "api" as the root folder
+  const result = await fetch('/api/comments', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(obj),
+  })
+
+  return result.json()
+}
 export {
   getPosts,
   getRecentPosts,
   getSimilarPosts,
   getCategories,
   getPostDetails,
+  submitComment,
 }
