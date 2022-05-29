@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { PostCard, Categories, PostWidget } from '../components'
 import { getPosts } from '../services'
+import { FeaturedPosts } from '../sections'
 
 export default function Home({ posts }) {
   return (
@@ -9,6 +10,7 @@ export default function Home({ posts }) {
         <title>Sanggy Blog</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <FeaturedPosts />
       <div className="lg grid grid-cols-1 gap-12 lg:grid-cols-12">
         <div className="col-span-1 lg:col-span-8">
           {posts.map((post) => (
